@@ -179,7 +179,7 @@ require(['jquery','oae.core'], function($, oae) {
                     'width': 'col-md-12',
                     'widgets': [
                         {
-                            'name': 'meetings',
+                            'name': 'meetingslibrary',
                             'settings': {
                                 'context': oae.data.me,
                                 'canManage': true
