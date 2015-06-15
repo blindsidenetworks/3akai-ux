@@ -457,6 +457,10 @@ div.oae-thumbnail.fa-oae-discussion:before {
     content: "\f086";
 }
 
+div.oae-thumbnail.fa-oae-meeting:before {
+  content: "\f03d";
+}
+
 div.oae-thumbnail.fa-oae-group:before {
     content: "\f0c0";
 }
