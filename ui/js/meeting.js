@@ -46,14 +46,6 @@ require(['jquery','oae.core'], function($, oae) {
                             'settings': meetingProfile
                         }
                     ]
-                },
-                {
-                    'width': 'col-md-12',
-                    'widgets': [
-                        {
-                            'name': 'comments'
-                        }
-                    ]
                 }
             ]
         }];
