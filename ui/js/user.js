@@ -183,7 +183,7 @@ require(['jquery', 'oae.core'], function($, oae) {
         },
         {
             'id': 'meetings',
-            'title': oae.api.i18n.translate('__MSG__MY_MEETINGS__'),
+            'title': oae.api.i18n.translate('__MSG__MEETINGS__'),
             'icon': 'fa-video-camera',
             'closeNav': true,
             'layout': [
