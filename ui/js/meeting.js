@@ -15,7 +15,7 @@
 
 require(['jquery','oae.core'], function($, oae) {
 
-    // Get the meeting id from the URL. The expected URL is `/meeting/<tenantId>/<resourceId>`.
+    // Get the meeting id from the URL. The expected URL is `/meeting/<tenantId>/<resourceId>/<action>`. [view|close]
     // The meeting id will then be `d:<tenantId>:<resourceId>`
     var meetingId = 'd:' + $.url().segment(2) + ':' + $.url().segment(3);
 
@@ -24,6 +24,15 @@ require(['jquery','oae.core'], function($, oae) {
 
     // Variable used to cache the requested meeting profile
     var meetingProfile = null;
+
+    // Variable used to store the action to be executed by the widget
+    var meetingAction = $.url().segment(4);
+    if( (typeof meetingAction === 'undefined') || (meetingAction != 'close') ) {
+        meetingAction = 'view';
+    } else {
+        window.open('','_parent','');
+        window.close();
+    }
 
     /**
      * Set up the left hand navigation with the meeting space page structure.
@@ -89,6 +98,9 @@ require(['jquery','oae.core'], function($, oae) {
             oae.api.util.showPage();
             // Set up the meeting push notifications
             setUpPushNotifications();
+
+            meetingProfile.action = meetingAction;
+
         });
     };
 
@@ -236,6 +248,21 @@ require(['jquery','oae.core'], function($, oae) {
         refreshMeetingTopic();
         // Refresh the clip
         setUpClip();
+    };
+
+    /////////////////////
+    // JOIN MEETING //
+    /////////////////////
+    /**
+     * Executes join meeting
+     */
+    var joinMeeting = function(meetingId, isManager) {
+        window.open('/api/meeting/' + meetingId + '/join');
+        // If it opened correctly then activate the 'end meeting' button
+        if( meeting.isManager ) {
+            html_meeting_actionbar_end += '<a href="" onclick="window.open(\'/api/meeting/' + meeting.id + '/end\');" id="meeting-default-end" class="btn"><i class="fa fa-minus-square pull-left"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</a>'; 
+            $('#meeting-actionbar-end', $rootel).html(html_meeting_actionbar_end);
+        }
     };
 
     // Catch the event sent out when the meeting has been updated
