@@ -236,7 +236,13 @@ require(['jquery','oae.core'], function($, oae) {
      */
     $(document).on('click', '.meeting-trigger-managemeeting-end', function() {
         console.info('Ending meeting');
-        //$('#meeting-actionbar-end').html('');
+        $.ajax({
+            'url': '/api/meeting/' + meetingProfile.id + '/end',
+            'success': function(data) {
+                console.info('Ended ok');
+                $('#meeting-actionbar-end').html('');
+            }
+        });
     });
 
 
