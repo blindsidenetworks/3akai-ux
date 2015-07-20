@@ -218,6 +218,27 @@ require(['jquery','oae.core'], function($, oae) {
      */
     $(document).on('oae.manageaccess.done', setUpClip);
 
+    /**
+     * Trigger the managemeeting action for joining the meeting
+     */
+    $(document).on('click', '.meeting-trigger-managemeeting-join', function() {
+        console.info('Joining meeting');
+        window.open('/api/meeting/' + meetingProfile.id + '/join');
+        if( meetingProfile.isManager ) {
+            var html_meeting_actionbar_end = '<button class="meeting-trigger-managemeeting-end"><i class="fa fa-minus-square pull-left oae-hide-when-anonymous"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</button>'; 
+            $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
+        }
+        //$(document).trigger('oae.trigger.managemeeting-join', meetingProfile);
+    });
+
+    /**
+     * Trigger the managemeeting action for ending the meeting
+     */
+    $(document).on('click', '.meeting-trigger-managemeeting-end', function() {
+        console.info('Ending meeting');
+        //$('#meeting-actionbar-end').html('');
+    });
+
 
     /////////////////////
     // EDIT MEETING //
@@ -248,21 +269,6 @@ require(['jquery','oae.core'], function($, oae) {
         refreshMeetingTopic();
         // Refresh the clip
         setUpClip();
-    };
-
-    /////////////////////
-    // JOIN MEETING //
-    /////////////////////
-    /**
-     * Executes join meeting
-     */
-    var joinMeeting = function(meetingId, isManager) {
-        window.open('/api/meeting/' + meetingId + '/join');
-        // If it opened correctly then activate the 'end meeting' button
-        if( meeting.isManager ) {
-            html_meeting_actionbar_end += '<a href="" onclick="window.open(\'/api/meeting/' + meeting.id + '/end\');" id="meeting-default-end" class="btn"><i class="fa fa-minus-square pull-left"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</a>'; 
-            $('#meeting-actionbar-end', $rootel).html(html_meeting_actionbar_end);
-        }
     };
 
     // Catch the event sent out when the meeting has been updated
