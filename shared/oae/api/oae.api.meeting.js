@@ -313,4 +313,61 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
             }
         });
     };
+
+    /**
+     * Execute end meeting to kick out all the users and close the meeting
+     *
+     * @param  {String}        meetingId          Id of the meeting we're trying to delete
+     * @param  {Function}      [callback]            Standard callback function
+     * @param  {Object}        [callback.err]        Error object containing error code and error message
+     * @throws {Error}                               Error thrown when no valid meeting id has been provided
+     */
+    var endMeeting = exports.endMeeting = function(meetingId, callback) {
+        if (!meetingId) {
+            throw new Error('A valid meeting id should be provided');
+        }
+
+        // Set a default callback function in case no callback function has been provided
+        callback = callback || function() {};
+
+        $.ajax({
+            'url': '/api/meeting/' + meetingId + '/end',
+            'type': 'GET',
+            'success': function() {
+                callback(null);
+            },
+            'error': function(jqXHR, textStatus) {
+                callback({'code': jqXHR.status, 'msg': jqXHR.responseText});
+            }
+        });
+    };
+
+    /**
+     * Execute end meeting to kick out all the users and close the meeting
+     *
+     * @param  {String}        meetingId          Id of the meeting we're trying to delete
+     * @param  {Function}      [callback]            Standard callback function
+     * @param  {Object}        [callback.err]        Error object containing error code and error message
+     * @throws {Error}                               Error thrown when no valid meeting id has been provided
+     */
+    var infoMeeting = exports.infoMeeting = function(meetingId, callback) {
+        if (!meetingId) {
+            throw new Error('A valid meeting id should be provided');
+        }
+
+        // Set a default callback function in case no callback function has been provided
+        callback = callback || function() {};
+
+        $.ajax({
+            'url': '/api/meeting/' + meetingId + '/info',
+            'type': 'GET',
+            'success': function(response) {
+                callback(null, response);
+            },
+            'error': function(jqXHR, textStatus) {
+                callback({'code': jqXHR.status, 'msg': jqXHR.responseText}, null);
+            }
+        });
+    };
+
 });

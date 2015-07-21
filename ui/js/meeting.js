@@ -100,7 +100,6 @@ require(['jquery','oae.core'], function($, oae) {
             setUpPushNotifications();
 
             meetingProfile.action = meetingAction;
-
         });
     };
 
@@ -224,10 +223,10 @@ require(['jquery','oae.core'], function($, oae) {
     $(document).on('click', '.meeting-trigger-managemeeting-join', function() {
         console.info('Joining meeting');
         window.open('/api/meeting/' + meetingProfile.id + '/join');
-        if( meetingProfile.isManager ) {
-            var html_meeting_actionbar_end = '<button class="meeting-trigger-managemeeting-end"><i class="fa fa-minus-square pull-left oae-hide-when-anonymous"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</button>'; 
-            $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
-        }
+        //if( meetingProfile.isManager ) {
+        //    var html_meeting_actionbar_end = '<button class="meeting-trigger-managemeeting-end"><i class="fa fa-minus-square pull-left oae-hide-when-anonymous"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</button>'; 
+        //    $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
+        //}
         //$(document).trigger('oae.trigger.managemeeting-join', meetingProfile);
     });
 
@@ -236,11 +235,10 @@ require(['jquery','oae.core'], function($, oae) {
      */
     $(document).on('click', '.meeting-trigger-managemeeting-end', function() {
         console.info('Ending meeting');
-        $.ajax({
-            'url': '/api/meeting/' + meetingProfile.id + '/end',
-            'success': function(data) {
+        oae.api.meeting.endMeeting(meetingProfile.id, function(err) {
+            if (!err) {
                 console.info('Ended ok');
-                $('#meeting-actionbar-end').html('');
+                //$('#meeting-actionbar-end').html('');
             }
         });
     });
@@ -283,5 +281,5 @@ require(['jquery','oae.core'], function($, oae) {
     });
 
     getMeetingProfile();
-
+    console.info('meeting loaded');
 });
