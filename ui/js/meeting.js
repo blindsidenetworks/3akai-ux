@@ -140,6 +140,7 @@ require(['jquery','oae.core'], function($, oae) {
      */
     var setUpPushNotifications = function() {
         oae.api.push.subscribe(meetingId, 'activity', meetingProfile.signature, 'internal', false, false, function(activities) {
+            console.info('Notification pushed');
             // The `activity` stream pushes out activities on routing so it's always
             // safe to just pick the first item from the `activities` array
             var activity = activities[0];
@@ -216,6 +217,14 @@ require(['jquery','oae.core'], function($, oae) {
      * Re-render the meeting's clip when the permissions have been updated
      */
     $(document).on('oae.manageaccess.done', setUpClip);
+
+    /**
+     * Trigger the managemeeting action for refreshing the meeting
+     */
+    $(document).on('click', '.meeting-trigger-managemeeting-refresh', function() {
+        console.info('Refreshing meeting');
+        $(document).trigger('oae.trigger.managemeeting-refresh', meetingProfile);
+    });
 
     /**
      * Trigger the managemeeting action for joining the meeting
