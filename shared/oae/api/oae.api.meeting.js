@@ -45,15 +45,18 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
      *
      * @param  {String}         displayName               Topic for the meeting
      * @param  {String}         [description]             The meeting's description
+     * @param  {String}         [record]       		      Flag indicating that the meeting may be recorded
+     * @param  {String}         [allModerators]           Flag indicating that all users join as moderators
+     * @param  {String}         [waitModerator]           Flag indicating that viewers must wait until a moderator joins
      * @param  {String}         [visibility]              The meeting's visibility. This can be public, loggedin or private
      * @param  {String[]}       [managers]                Array of user/group ids that should be added as managers to the meeting
      * @param  {String[]}       [members]                 Array of user/group ids that should be added as members to the meeting
      * @param  {Function}       [callback]                Standard callback function
      * @param  {Object}         [callback.err]            Error object containing error code and error message
-     * @param  {Meeting}     [callback.meeting]     Meeting object representing the created meeting
+     * @param  {Meeting}        [callback.meeting]        Meeting object representing the created meeting
      * @throws {Error}                                    Error thrown when no meeting topic has been provided
      */
-    var createMeeting = exports.createMeeting = function(displayName, description, visibility, managers, members, callback) {
+    var createMeeting = exports.createMeeting = function(displayName, description, record, allModerators, waitModerator, visibility, managers, members, callback) {
         if (!displayName) {
             throw new Error('A valid description topic should be provided');
         }
@@ -64,12 +67,15 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
         var data = {
             'displayName': displayName,
             'description': description,
+            'record': record,
+            'allModerators': allModerators,
+            'waitModerator': waitModerator,
             'visibility': visibility,
             'managers': managers,
             'members': members
-            //'record': record,
-            //'duration': duration
         };
+        console.info('Creating meeting:');
+        console.info(data);
 
         $.ajax({
             'url': '/api/meeting/create',
