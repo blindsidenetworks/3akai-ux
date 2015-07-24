@@ -140,7 +140,7 @@ require(['jquery','oae.core'], function($, oae) {
      */
     var setUpPushNotifications = function() {
         oae.api.push.subscribe(meetingId, 'activity', meetingProfile.signature, 'internal', false, false, function(activities) {
-            console.info('Notification pushed');
+            console.info('Subscribed to notifications');
             // The `activity` stream pushes out activities on routing so it's always
             // safe to just pick the first item from the `activities` array
             var activity = activities[0];
