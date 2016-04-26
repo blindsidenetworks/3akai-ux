@@ -160,6 +160,12 @@ require(['jquery', 'oae.core'], function($, oae) {
                         'title': oae.api.i18n.translate('__MSG__DISCUSSION__'),
                         'closeNav': true,
                         'class': 'oae-trigger-creatediscussion'
+                    },
+                    {
+                        'icon': 'fa-video-camera',
+                        'title': oae.api.i18n.translate('__MSG__MEETING__'),
+                        'closeNav': true,
+                        'class': 'oae-trigger-createmeeting'
                     }
                 ]
             });
@@ -266,6 +272,27 @@ require(['jquery', 'oae.core'], function($, oae) {
                             'name': 'members',
                             'settings': {
                                 'context': groupProfile,
+                                'canManage': groupProfile.isManager
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            'id': 'meetings',
+            'title': oae.api.i18n.translate('__MSG__MEETINGS__'),
+            'icon': 'fa-video-camera',
+            'closeNav': true,
+            'layout': [
+                {
+                    'width': 'col-md-12',
+                    'widgets': [
+                        {
+                            'name': 'meetingslibrary',
+                            'settings': {
+                                'context': groupProfile,
+                                'canAdd': groupProfile.isMember,
                                 'canManage': groupProfile.isManager
                             }
                         }
