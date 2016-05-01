@@ -18,10 +18,10 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     /**
      * Get a full meeting profile
      *
-     * @param  {String}       meetingId          Id of the meeting we're trying to retrieve
+     * @param  {String}       meetingId             Id of the meeting we're trying to retrieve
      * @param  {Function}     callback              Standard callback function
      * @param  {Object}       callback.err          Error object containing error code and error message
-     * @param  {Meeting}      callback.meeting   Meeting object representing the retrieved meeting
+     * @param  {Meeting}      callback.meeting      Meeting object representing the retrieved meeting
      * @throws {Error}                              Error thrown when no meeting id has been provided
      */
     var getMeeting = exports.getMeeting = function(meetingId, callback) {
@@ -45,7 +45,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
      *
      * @param  {String}         displayName               Topic for the meeting
      * @param  {String}         [description]             The meeting's description
-     * @param  {String}         [record]       		      Flag indicating that the meeting may be recorded
+     * @param  {String}         [record]       		        Flag indicating that the meeting may be recorded
      * @param  {String}         [allModerators]           Flag indicating that all users join as moderators
      * @param  {String}         [waitModerator]           Flag indicating that viewers must wait until a moderator joins
      * @param  {String}         [visibility]              The meeting's visibility. This can be public, loggedin or private
@@ -93,11 +93,11 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     /**
      * Update a meeting's metadata
      *
-     * @param  {String}       meetingId                Id of the meeting we're trying to update
+     * @param  {String}       meetingId                   Id of the meeting we're trying to update
      * @param  {Object}       params                      JSON object where the keys represent all of the profile field names we want to update and the values represent the new values for those fields
      * @param  {Function}     [callback]                  Standard callback function
      * @param  {Object}       [callback.err]              Error object containing error code and error message
-     * @param  {Meeting}   [callback.meeting]       Meeting object representing the updated meeting
+     * @param  {Meeting}      [callback.meeting]          Meeting object representing the updated meeting
      * @throws {Error}                                    Error thrown when not all of the required parameters have been provided
      */
     var updateMeeting = exports.updateMeeting = function(meetingId, params, callback) {
@@ -126,7 +126,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     /**
      * Permanently delete a meeting from the system
      *
-     * @param  {String}        meetingId          Id of the meeting we're trying to delete
+     * @param  {String}        meetingId             Id of the meeting we're trying to delete
      * @param  {Function}      [callback]            Standard callback function
      * @param  {Object}        [callback.err]        Error object containing error code and error message
      * @throws {Error}                               Error thrown when no valid meeting id has been provided
@@ -154,7 +154,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     /**
      * Get the viewers and managers of a meeting
      *
-     * @param  {String}          meetingId                   Id of the meeting we're trying to retrieve the members for
+     * @param  {String}          meetingId                      Id of the meeting we're trying to retrieve the members for
      * @param  {String}          [start]                        The token used for paging. If the first page of results is required, `null` should be passed in as the token. For any subsequent pages, the `nextToken` provided in the feed from the previous page should be used
      * @param  {Number}          [limit]                        The number of members to retrieve
      * @param  {Function}        callback                       Standard callback function
@@ -189,7 +189,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     /**
      * Change the members and managers of a meeting
      *
-     * @param  {String}       meetingId          Id of the meeting we're trying to update the members of
+     * @param  {String}       meetingId             Id of the meeting we're trying to update the members of
      * @param  {Object}       updatedMembers        JSON Object where the keys are the user/group ids we want to update membership for, and the values are the roles these members should get (manager or viewer). If false is passed in as a role, the principal will be removed as a member
      * @param  {Function}     [callback]            Standard callback function
      * @param  {Object}       [callback.err]        Error object containing error code and error message
@@ -221,7 +221,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     /**
      * Share a meeting
      *
-     * @param  {String}       meetingId          Id of the meeting we're trying to share
+     * @param  {String}       meetingId             Id of the meeting we're trying to share
      * @param  {String[]}     principals            Array of principal ids with who the meeting should be shared
      * @param  {Function}     [callback]            Standard callback function
      * @param  {Object}       [callback.err]        Error object containing error code and error message
@@ -262,9 +262,9 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
      * @param  {Number}         [limit]                         The number of meetings to retrieve
      * @param  {Function}       callback                        Standard callback function
      * @param  {Object}         callback.err                    Error object containing error code and error message
-     * @param  {Object}         callback.meetings            Response object containing the meetings in the requested library and nextToken
-     * @param  {Meeting[]}   callback.meetings.results    Array of meetings representing the meetings present in the library
-     * @param  {String}         callback.meetings.nextToken  The value to provide in the `start` parameter to get the next set of results
+     * @param  {Object}         callback.meetings               Response object containing the meetings in the requested library and nextToken
+     * @param  {Meeting[]}      callback.meetings.results       Array of meetings representing the meetings present in the library
+     * @param  {String}         callback.meetings.nextToken     The value to provide in the `start` parameter to get the next set of results
      * @throws {Error}                                          Error thrown when no principal id has been provided
      */
     var getLibrary = exports.getLibrary = function(principalId, start, limit, callback) {
@@ -293,7 +293,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
      * Delete a meeting from a meeting library
      *
      * @param  {String}         principalId       User or group id for for the library from which we want to delete the content
-     * @param  {String}         meetingId      Id of the meeting we're trying to delete from the library
+     * @param  {String}         meetingId         Id of the meeting we're trying to delete from the library
      * @param  {Function}       [callback]        Standard callback function
      * @param  {Object}         [callback.err]    Error object containing error code and error message
      * @throws {Error}                            Error thrown when not all of the required parameters have been provided
@@ -323,7 +323,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     /**
      * Execute end meeting to kick out all the users and close the meeting
      *
-     * @param  {String}        meetingId          Id of the meeting we're trying to delete
+     * @param  {String}        meetingId             Id of the meeting we're trying to end
      * @param  {Function}      [callback]            Standard callback function
      * @param  {Object}        [callback.err]        Error object containing error code and error message
      * @throws {Error}                               Error thrown when no valid meeting id has been provided
@@ -339,7 +339,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
         $.ajax({
             'url': '/api/meeting/' + meetingId + '/end',
             'type': 'GET',
-            'success': function() {
+            'success': function(data) {
                 callback(null);
             },
             'error': function(jqXHR, textStatus) {
@@ -351,7 +351,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     /**
      * Execute end meeting to kick out all the users and close the meeting
      *
-     * @param  {String}        meetingId          Id of the meeting we're trying to delete
+     * @param  {String}        meetingId             Id of the meeting we're trying to fetch
      * @param  {Function}      [callback]            Standard callback function
      * @param  {Object}        [callback.err]        Error object containing error code and error message
      * @throws {Error}                               Error thrown when no valid meeting id has been provided
@@ -376,4 +376,33 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
         });
     };
 
+    /**
+     * Execute get recordings to fetch the recordings belonging to a meeting
+     *
+     * @param  {String}        meetingId             Id(s) of the meeting(s) we're trying to get recordings from
+     * @param  {Function}      [callback]            Standard callback function
+     * @param  {Object}        [callback.err]        Error object containing error code and error message
+     * @throws {Error}                               Error thrown when no valid meeting id has been provided
+     */
+    var getRecording = exports.getRecording = function(meetingId, callback) {
+        if (!meetingId) {
+            throw new Error('A valid meeting id should be provided');
+        }
+
+        // Set a default callback function in case no callback function has been provided
+        callback = callback || function() {};
+
+        $.ajax({
+            'url': '/api/recording/' + meetingId,
+            'type': 'GET',
+            'success': function(response) {
+                console.info('Success');
+                callback(null, response);
+            },
+            'error': function(jqXHR, textStatus) {
+                console.info('Error');
+                callback({'code': jqXHR.status, 'msg': jqXHR.responseText}, null);
+            }
+        });
+    };
 });
