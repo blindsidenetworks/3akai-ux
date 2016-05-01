@@ -178,7 +178,7 @@ require(['jquery','oae.core'], function($, oae) {
                 'accessNotUpdatedTitle': oae.api.i18n.translate('__MSG__MEETING_ACCESS_NOT_UPDATED__'),
                 'accessUpdatedBody': oae.api.i18n.translate('__MSG__MEETING_ACCESS_SUCCESSFULLY_UPDATED__'),
                 'accessUpdatedTitle': oae.api.i18n.translate('__MSG__MEETING_ACCESS_UPDATED__'),
-                'membersTitle': oae.api.i18n.translate('__MSG__SHARE_WITH__'),
+                'membersTitle': oae.api.i18n.translate('__MSG__SHARED_WITH__'),
                 'private': oae.api.i18n.translate('__MSG__PRIVATE__'),
                 'loggedin': oae.api.util.security().encodeForHTML(meetingProfile.tenant.displayName),
                 'public': oae.api.i18n.translate('__MSG__PUBLIC__'),
@@ -232,11 +232,11 @@ require(['jquery','oae.core'], function($, oae) {
     $(document).on('click', '.meeting-trigger-managemeeting-join', function() {
         console.info('Joining meeting');
         window.open('/api/meeting/' + meetingProfile.id + '/join');
-        //if( meetingProfile.isManager ) {
-        //    var html_meeting_actionbar_end = '<button class="meeting-trigger-managemeeting-end"><i class="fa fa-minus-square pull-left oae-hide-when-anonymous"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</button>'; 
-        //    $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
-        //}
-        //$(document).trigger('oae.trigger.managemeeting-join', meetingProfile);
+        if( meetingProfile.isManager ) {
+            var html_meeting_actionbar_end = '<button class="meeting-trigger-managemeeting-end"><i class="fa fa-minus-square pull-left oae-hide-when-anonymous"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</button>';
+            $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
+        }
+        $(document).trigger('oae.trigger.managemeeting-join', meetingProfile);
     });
 
     /**
@@ -247,7 +247,7 @@ require(['jquery','oae.core'], function($, oae) {
         oae.api.meeting.endMeeting(meetingProfile.id, function(err) {
             if (!err) {
                 console.info('Ended ok');
-                //$('#meeting-actionbar-end').html('');
+                $('#meeting-actionbar-end').html('');
             }
         });
     });
