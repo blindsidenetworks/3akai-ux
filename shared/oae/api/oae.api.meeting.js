@@ -438,5 +438,33 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
         });
     };
 
+    /**
+     * Execute delete recordings to delete the recording from database
+     *
+     * @param  {String}        recordingId           Id of the recording to delete
+     * @param  {Function}      [callback]            Standard callback function
+     * @param  {Object}        [callback.err]        Error object containing error code and error message
+     * @throws {Error}                               Error thrown when no valid meeting id has been provided
+     */
+    var deleteRecording = exports.deleteRecording = function(recordingId, callback) {
+        if (!recordingId) {
+            throw new Error('A valid recording id should be provided');
+        }
 
+        // Set a default callback function in case no callback function has been provided
+        callback = callback || function() {};
+
+        $.ajax({
+            'url': '/api/recording/' + recordingId,
+            'type': 'DELETE',
+            'success': function(response) {
+                console.info('Success');
+                callback(null, response);
+            },
+            'error': function(jqXHR, textStatus) {
+                console.info('Error');
+                callback({'code': jqXHR.status, 'msg': jqXHR.responseText}, null);
+            }
+        });
+    };
 });
