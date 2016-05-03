@@ -405,4 +405,38 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
             }
         });
     };
+
+    /**
+     * Execute to update recordings info
+     *
+     * @param  {String}        recordingId           Id of the recording to update
+     * @param  {String}        publish               The value of publish true or false
+     * @param  {Function}      [callback]            Standard callback function
+     * @param  {Object}        [callback.err]        Error object containing error code and error message
+     * @throws {Error}                               Error thrown when no valid meeting id has been provided
+     */
+    var updateRecording = exports.updateRecording = function(recordingId, publish, callback) {
+        if (!recordingId) {
+            throw new Error('A valid recording id should be provided');
+        }
+
+        // Set a default callback function in case no callback function has been provided
+        callback = callback || function() {};
+
+        $.ajax({
+            'url': '/api/recording/' + recordingId,
+            'type': 'PATCH',
+            'data':{'publish': !publish},
+            'success': function(response) {
+                console.info('Success');
+                callback(null, response);
+            },
+            'error': function(jqXHR, textStatus) {
+                console.info('Error');
+                callback({'code': jqXHR.status, 'msg': jqXHR.responseText}, null);
+            }
+        });
+    };
+
+
 });
