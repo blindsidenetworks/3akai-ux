@@ -467,4 +467,56 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
             }
         });
     };
+
+    /**
+     * Get all the invitations for a meeting
+     *
+     * @param  {String}         meetingId                       Id of the meeting we're trying to retrieve the invitations for
+     * @param  {Function}       callback                        Standard callback function
+     * @param  {Object}         callback.err                    Error object containing error code and error message
+     * @param  {Object}         callback.invitations            Response object containing the meeting invitations
+     * @param  {Invitation[]}   callback.invitations.results    Every invitation associated to the meeting
+     * @throws {Error}                                          Error thrown when no meeting id has been provided
+     */
+    var getInvitations = exports.getInvitations = function(meetingId, callback) {
+        if (!meetingId) {
+            throw new Error('A valid meeting id should be provided');
+        }
+
+        $.ajax({
+            'url': '/api/meeting/'  + meetingId + '/invitations',
+            'success': function(data) {
+                callback(null, data);
+            },
+            'error': function(jqXHR, textStatus) {
+                callback({'code': jqXHR.status, 'msg': jqXHR.responseText});
+            }
+        });
+    };
+
+    /**
+     * Resend an invitation that invites an email into a meeting
+     *
+     * @param  {String}     meetingId    Id of the meeting whose invitation to resend
+     * @param  {String}     email           The email of the invitation to resend
+     * @param  {Function}   callback        Standard callback function
+     * @param  {Object}     callback.err    Error object containing error code and error message
+     * @throws {Error}                      Error thrown when no meeting id has been provided
+     */
+    var resendInvitation = exports.resendInvitation = function(meetingId, email, callback) {
+        if (!meetingId) {
+            throw new Error('A valid meeting id should be provided');
+        }
+
+        $.ajax({
+            'url': '/api/meeting/' + meetingId + '/invitations/' + email + '/resend',
+            'type': 'POST',
+            'success': function() {
+                callback();
+            },
+            'error': function(jqXHR, textStatus) {
+                callback({'code': jqXHR.status, 'msg': jqXHR.responseText});
+            }
+        });
+    };
 });

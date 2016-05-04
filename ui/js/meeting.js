@@ -194,6 +194,8 @@ require(['jquery','oae.core'], function($, oae) {
             'api': {
                 'getMembersURL': '/api/meeting/'+ meetingProfile.id + '/members',
                 'setMembers': oae.api.meeting.updateMembers,
+                'getInvitations': oae.api.meeting.getInvitations,
+                'resendInvitation': oae.api.meeting.resendInvitation,
                 'setVisibility': oae.api.meeting.updateMeeting
             }
         };
