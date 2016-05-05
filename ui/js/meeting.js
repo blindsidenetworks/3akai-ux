@@ -143,7 +143,6 @@ require(['jquery','oae.core'], function($, oae) {
      */
     var setUpPushNotifications = function() {
         oae.api.push.subscribe(meetingId, 'activity', meetingProfile.signature, 'internal', false, false, function(activities) {
-            console.info('Subscribed to notifications');
             // The `activity` stream pushes out activities on routing so it's always
             // safe to just pick the first item from the `activities` array
             var activity = activities[0];
@@ -251,7 +250,6 @@ require(['jquery','oae.core'], function($, oae) {
         console.info('Ending meeting');
         oae.api.meeting.endMeeting(meetingProfile.id, function(err) {
             if (!err) {
-                console.info('Ended ok');
                 $('#meeting-actionbar-end').html('');
             }
         });

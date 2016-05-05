@@ -74,8 +74,6 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
             'managers': managers,
             'members': members
         };
-        console.info('Creating meeting:');
-        console.info(data);
 
         $.ajax({
             'url': '/api/meeting/create',
@@ -400,8 +398,12 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
                 callback(null, response);
             },
             'error': function(jqXHR, textStatus) {
-                console.info('Error');
                 callback({'code': jqXHR.status, 'msg': jqXHR.responseText}, null);
+            },
+            'statusCode': {
+                404:  function() {
+                    console.info('No recording found');
+                }
             }
         });
     };
