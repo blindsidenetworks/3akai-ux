@@ -54,6 +54,9 @@ define(['exports', 'jquery', 'underscore', 'oae.api.util', 'sockjs'], function(e
             'actor': true,
             'object': true,
             'target': 'objectType'
+        },
+        'meeting-message': {
+            'target': true
         }
     };
 

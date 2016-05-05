@@ -25,10 +25,10 @@
 var _expose = function(exports) {
 
     // Variable that keeps track of the different activity types that are used for comment activities
-    var COMMENT_ACTIVITY_TYPES = ['content-comment', 'folder-comment', 'discussion-message'];
+    var COMMENT_ACTIVITY_TYPES = ['content-comment', 'folder-comment', 'discussion-message', 'meeting-message'];
 
     // Variable that keeps track of the different activity types that are used for sharing activities
-    var SHARE_ACTIVITY_TYPES = ['content-share', 'discussion-share', 'folder-share'];
+    var SHARE_ACTIVITY_TYPES = ['content-share', 'discussion-share', 'folder-share', 'meeting-share'];
 
     /**
      * Adapt a set of activities in activitystrea.ms format to a simpler view model
