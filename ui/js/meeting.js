@@ -53,6 +53,9 @@ require(['jquery','oae.core'], function($, oae) {
                         {
                             'name': 'meeting',
                             'settings': meetingProfile
+                        },
+                        {
+                            'name': 'comments'
                         }
                     ]
                 }
