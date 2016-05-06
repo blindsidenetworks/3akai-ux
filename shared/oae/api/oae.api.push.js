@@ -40,9 +40,6 @@ define(['exports', 'jquery', 'underscore', 'oae.api.util', 'sockjs'], function(e
         'discussion-message': {
             'target': true
         },
-        'meeting-message': {
-            'target': true
-        },
         'folder-add-to-folder': {
             'target': true
         },
