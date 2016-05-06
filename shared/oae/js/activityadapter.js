@@ -25,10 +25,10 @@
 var _expose = function(exports) {
 
     // Variable that keeps track of the different activity types that are used for comment activities
-    var COMMENT_ACTIVITY_TYPES = ['content-comment', 'folder-comment', 'discussion-message'];
+    var COMMENT_ACTIVITY_TYPES = ['content-comment', 'folder-comment', 'discussion-message', 'meeting-message'];
 
     // Variable that keeps track of the different activity types that are used for sharing activities
-    var SHARE_ACTIVITY_TYPES = ['content-share', 'discussion-share', 'folder-share'];
+    var SHARE_ACTIVITY_TYPES = ['content-share', 'discussion-share', 'folder-share', 'meeting-share'];
 
     /**
      * Adapt a set of activities in activitystrea.ms format to a simpler view model
@@ -708,6 +708,20 @@ var _expose = function(exports) {
             return _generateDiscussionUpdateMemberRoleSummary(me, activity, properties);
         } else if (activityType === 'discussion-update-visibility') {
             return _generateDiscussionUpdateVisibilitySummary(me, activity, properties);
+        } else if (activityType === 'meeting-add-to-library') {
+            return _generateMeetingAddToLibrarySummary(me, activity, properties);
+        } else if (activityType === 'meeting-create') {
+            return _generateMeetingCreateSummary(me, activity, properties);
+        } else if (activityType === 'meeting-message') {
+            return _generateMeetingMessageSummary(me, activity, properties);
+        } else if (activityType === 'meeting-share') {
+            return _generateMeetingShareSummary(me, activity, properties);
+        } else if (activityType === 'meeting-update') {
+            return _generateMeetingUpdateSummary(me, activity, properties);
+        } else if (activityType === 'meeting-update-member-role') {
+            return _generateMeetingUpdateMemberRoleSummary(me, activity, properties);
+        } else if (activityType === 'meeting-update-visibility') {
+            return _generateMeetingUpdateVisibilitySummary(me, activity, properties);
         } else if (activityType === 'folder-add-to-folder') {
             return _generateFolderAddToFolderSummary(me, activity, properties);
         } else if (activityType === 'folder-add-to-library') {
@@ -1344,6 +1358,177 @@ var _expose = function(exports) {
             i18nKey = '__MSG__ACTIVITY_DISCUSSION_VISIBILITY_LOGGEDIN__';
         } else {
             i18nKey = '__MSG__ACTIVITY_DISCUSSION_VISIBILITY_PRIVATE__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of an add to library activity for a meeting.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the add to meeting library activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingAddToLibrarySummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.objectCount === 1) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_ADD_LIBRARY__';
+        } else if (properties.objectCount === 2) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_ADD_LIBRARY_2__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_MEETING_ADD_LIBRARY_2+__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a meeting creation activity.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meeting creation activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingCreateSummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.objectCount === 1) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_CREATE_1__';
+        } else if (properties.objectCount === 2) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_CREATE_2__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_MEETING_CREATE_2+__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a meeting post activity.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meeting message activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingMessageSummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.actorCount === 1) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_MESSAGE_1__';
+        } else if (properties.actorCount === 2) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_MESSAGE_2__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_MEETING_MESSAGE_2+__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a meeting share activity.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meeting share activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingShareSummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.objectCount === 1) {
+            if (properties.targetCount === 1) {
+                if (activity.target['oae:id'] === me.id) {
+                    i18nKey = '__MSG__ACTIVITY_MEETING_SHARE_YOU__';
+                } else {
+                    i18nKey = '__MSG__ACTIVITY_MEETING_SHARE_1__';
+                }
+            } else if (properties.targetCount === 2) {
+                i18nKey = '__MSG__ACTIVITY_MEETING_SHARE_2__';
+            } else {
+                i18nKey = '__MSG__ACTIVITY_MEETING_SHARE_2+__';
+            }
+        } else {
+            if (properties.objectCount === 2) {
+                if (activity.target['oae:id'] === me.id) {
+                    i18nKey = '__MSG__ACTIVITY_MEETINGS_SHARE_2_YOU__';
+                } else {
+                    i18nKey = '__MSG__ACTIVITY_MEETINGS_SHARE_2__';
+                }
+            } else {
+                if (activity.target['oae:id'] === me.id) {
+                    i18nKey = '__MSG__ACTIVITY_MEETINGS_SHARE_2+_YOU__';
+                } else {
+                    i18nKey = '__MSG__ACTIVITY_MEETINGS_SHARE_2+__';
+                }
+            }
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a meeting member role update activity.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meeting member update activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingUpdateMemberRoleSummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.objectCount === 1) {
+            if (activity.object['oae:id'] === me.id) {
+                i18nKey = '__MSG__ACTIVITY_MEETING_UPDATE_MEMBER_ROLE_YOU__';
+            } else {
+                i18nKey = '__MSG__ACTIVITY_MEETING_UPDATE_MEMBER_ROLE_1__';
+            }
+        } else if (properties.objectCount === 2) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_UPDATE_MEMBER_ROLE_2__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_MEETING_UPDATE_MEMBER_ROLE_2+__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a meeting update activity.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meeting update activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingUpdateSummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.actorCount === 1) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_UPDATE_1__';
+        } else if (properties.actorCount === 2) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_UPDATE_2__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_MEETING_UPDATE_2+__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a visibility update activity for a meeting.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meeting visibility update activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingUpdateVisibilitySummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (activity.object['oae:visibility'] === 'public') {
+            i18nKey = '__MSG__ACTIVITY_MEETING_VISIBILITY_PUBLIC__';
+        } else if (activity.object['oae:visibility'] === 'loggedin') {
+            i18nKey = '__MSG__ACTIVITY_MEETING_VISIBILITY_LOGGEDIN__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_MEETING_VISIBILITY_PRIVATE__';
         }
         return new ActivityViewSummary(i18nKey, properties);
     };
