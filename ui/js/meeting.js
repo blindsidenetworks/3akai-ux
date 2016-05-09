@@ -239,6 +239,12 @@ require(['jquery','oae.core'], function($, oae) {
         if( meetingProfile.isManager ) {
             var html_meeting_actionbar_end = '<button class="meeting-trigger-managemeeting-end"><i class="fa fa-minus-square pull-left oae-hide-when-anonymous"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</button>';
             $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
+
+            if ( meetingProfile.waitModerator ) {
+              oae.api.meeting.startMeeting(meetingProfile.id, function(err) {
+
+              });
+            }
         }
         $(document).trigger('oae.trigger.managemeeting-join', meetingProfile);
     });
