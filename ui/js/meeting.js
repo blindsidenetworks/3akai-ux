@@ -147,7 +147,7 @@ require(['jquery','oae.core'], function($, oae) {
             // safe to just pick the first item from the `activities` array
             var activity = activities[0];
 
-            var supportedActivities = ['meeting-update', 'meeting-update-visibility'];
+            var supportedActivities = ['meeting-update', 'meeting-update-visibility', 'meeting-start', 'meeting-end'];
             // Only respond to push notifications caused by other users
             if (activity.actor.id !== oae.data.me.id && _.contains(supportedActivities, activity['oae:activityType'])) {
                 activity.object.canShare = meetingProfile.canShare;
@@ -239,6 +239,12 @@ require(['jquery','oae.core'], function($, oae) {
         if( meetingProfile.isManager ) {
             var html_meeting_actionbar_end = '<button class="meeting-trigger-managemeeting-end"><i class="fa fa-minus-square pull-left oae-hide-when-anonymous"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</button>';
             $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
+
+            if ( meetingProfile.waitModerator ) {
+                oae.api.meeting.startMeeting(meetingProfile.id, function(err) {
+
+                });
+            }
         }
         $(document).trigger('oae.trigger.managemeeting-join', meetingProfile);
     });

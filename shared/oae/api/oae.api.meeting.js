@@ -122,6 +122,34 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
     };
 
     /**
+     * Start a meeting
+     *
+     * @param  {String}       meetingId                   Id of the meeting we're trying to start
+     * @param  {Function}     [callback]                  Standard callback function
+     * @param  {Object}       [callback.err]              Error object containing error code and error message
+     * @throws {Error}                                    Error thrown when not all of the required parameters have been provided
+     */
+    var startMeeting = exports.startMeeting = function(meetingId, callback) {
+        if (!meetingId) {
+            throw new Error('A valid meeting id should be provided');
+        }
+
+        // Set a default callback function in case no callback function has been provided
+        callback = callback || function() {};
+
+        $.ajax({
+            'url': '/api/meeting/' + meetingId + '/start',
+            'type': 'POST',
+            'success': function() {
+                callback(null);
+            },
+            'error': function(jqXHR, textStatus) {
+                callback({'code': jqXHR.status, 'msg': jqXHR.responseText});
+            }
+        });
+    };
+
+    /**
      * Permanently delete a meeting from the system
      *
      * @param  {String}        meetingId             Id of the meeting we're trying to delete
