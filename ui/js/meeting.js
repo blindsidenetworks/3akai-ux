@@ -241,11 +241,9 @@ require(['jquery','oae.core'], function($, oae) {
             $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
 
             if ( meetingProfile.waitModerator ) {
-              setTimeout(function () {
                 oae.api.meeting.startMeeting(meetingProfile.id, function(err) {
 
                 });
-              }, 2000);
             }
         }
         $(document).trigger('oae.trigger.managemeeting-join', meetingProfile);
