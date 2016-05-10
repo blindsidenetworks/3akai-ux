@@ -127,7 +127,6 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
      * @param  {String}       meetingId                   Id of the meeting we're trying to start
      * @param  {Function}     [callback]                  Standard callback function
      * @param  {Object}       [callback.err]              Error object containing error code and error message
-     * @param  {Meeting}      [callback.meeting]          Meeting object representing the started meeting
      * @throws {Error}                                    Error thrown when not all of the required parameters have been provided
      */
     var startMeeting = exports.startMeeting = function(meetingId, callback) {
