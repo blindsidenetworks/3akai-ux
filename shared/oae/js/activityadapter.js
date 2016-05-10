@@ -712,6 +712,10 @@ var _expose = function(exports) {
             return _generateMeetingAddToLibrarySummary(me, activity, properties);
         } else if (activityType === 'meeting-create') {
             return _generateMeetingCreateSummary(me, activity, properties);
+        } else if (activityType === 'meeting-start') {
+            return _generateMeetingStartSummary(me, activity, properties);
+        } else if (activityType === 'meeting-end') {
+            return _generateMeetingEndSummary(me, activity, properties);
         } else if (activityType === 'meeting-message') {
             return _generateMeetingMessageSummary(me, activity, properties);
         } else if (activityType === 'meeting-share') {
@@ -1400,6 +1404,48 @@ var _expose = function(exports) {
             i18nKey = '__MSG__ACTIVITY_MEETING_CREATE_2__';
         } else {
             i18nKey = '__MSG__ACTIVITY_MEETING_CREATE_2+__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a meeting start activity.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meeting creation activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingStartSummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.objectCount === 1) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_START_1__';
+        } else if (properties.objectCount === 2) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_START_2__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_MEETING_START_2+__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a meeting end activity.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meeting creation activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetingEndSummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.objectCount === 1) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_END_1__';
+        } else if (properties.objectCount === 2) {
+            i18nKey = '__MSG__ACTIVITY_MEETING_END_2__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_MEETING_END_2+__';
         }
         return new ActivityViewSummary(i18nKey, properties);
     };
