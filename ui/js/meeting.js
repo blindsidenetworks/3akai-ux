@@ -147,7 +147,7 @@ require(['jquery','oae.core'], function($, oae) {
             // safe to just pick the first item from the `activities` array
             var activity = activities[0];
 
-            var supportedActivities = ['meeting-update', 'meeting-update-visibility', 'meeting-start'];
+            var supportedActivities = ['meeting-update', 'meeting-update-visibility', 'meeting-start', 'meeting-end'];
             // Only respond to push notifications caused by other users
             if (activity.actor.id !== oae.data.me.id && _.contains(supportedActivities, activity['oae:activityType'])) {
                 activity.object.canShare = meetingProfile.canShare;
