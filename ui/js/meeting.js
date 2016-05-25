@@ -147,7 +147,7 @@ require(['jquery','oae.core'], function($, oae) {
             // safe to just pick the first item from the `activities` array
             var activity = activities[0];
 
-            var supportedActivities = ['meeting-update', 'meeting-update-visibility', 'meeting-start', 'meeting-end'];
+            var supportedActivities = ['meeting-update', 'meeting-update-visibility', 'meeting-start', 'meeting-end', 'recording-update'];
             // Only respond to push notifications caused by other users
             if (activity.actor.id !== oae.data.me.id && _.contains(supportedActivities, activity['oae:activityType'])) {
                 activity.object.canShare = meetingProfile.canShare;
@@ -294,6 +294,17 @@ require(['jquery','oae.core'], function($, oae) {
         setUpClip();
     };
 
+
+    var processingIndicator = function(button, show) {
+        if(show) {
+          $(button).hide();
+          $(button).parent().children('.processing-indicator').show();
+        } else {
+          $(button).show();
+          $(button).parent().children('.processing-indicator').hide();
+        }
+    }
+
     // Catch the event sent out when the meeting has been updated
     $(document).on('oae.editmeeting.done', function(ev, updatedMeeting) {
         refreshMeetingProfile(updatedMeeting);
@@ -301,4 +312,31 @@ require(['jquery','oae.core'], function($, oae) {
 
     getMeetingProfile();
     console.info('meeting loaded');
+
+
+    ///////////////////////
+    // UPDATE RECORDING //
+    ///////////////////////
+
+    $(document).on('click', '.publish-recording', function() {
+        var button = this;
+        var recording_row = $(this).parents('tr:first');
+        var id = recording_row.data('id');
+        var publish = $(this).data('published');
+        oae.api.meeting.updateRecording(meetingProfile.id, id, publish, function(err, info) {
+          if(!err) {
+              links = $(".playback-links", recording_row);
+              $(button).data('published', !publish);
+              if (publish) {
+                  $(button).html('publish');
+                  links.hide();
+              } else {
+                  $(button).html('unpublish');
+                  links.show();
+              }
+          }
+          processingIndicator(button, false);
+        });
+        processingIndicator(button, true);
+    });
 });
