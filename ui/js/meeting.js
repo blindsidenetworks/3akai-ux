@@ -150,12 +150,16 @@ require(['jquery','oae.core'], function($, oae) {
             var supportedActivities = ['meeting-update', 'meeting-update-visibility', 'meeting-start', 'meeting-end', 'recording-update'];
             // Only respond to push notifications caused by other users
             if (activity.actor.id !== oae.data.me.id && _.contains(supportedActivities, activity['oae:activityType'])) {
-                activity.object.canShare = meetingProfile.canShare;
-                activity.object.canPost = meetingProfile.canPost;
-                activity.object.isManager = meetingProfile.isManager;
+                if (activity['oae:activityType'] === 'recording-update') {
+                    playbackLinks(activity.object.recording.recordID, activity.object.recording.publish);
+                } else {
+                    activity.object.canShare = meetingProfile.canShare;
+                    activity.object.canPost = meetingProfile.canPost;
+                    activity.object.isManager = meetingProfile.isManager;
 
-                // Trigger an edit meeting event so the UI can update itself where appropriate
-                $(document).trigger('oae.editmeeting.done', activity.object);
+                    // Trigger an edit meeting event so the UI can update itself where appropriate
+                    $(document).trigger('oae.editmeeting.done', activity.object);
+                }
             }
         });
     };
@@ -294,7 +298,12 @@ require(['jquery','oae.core'], function($, oae) {
         setUpClip();
     };
 
-
+    /**
+     * Show or hide the processingIndicator
+     *
+     * @param {JQuery}      button          Button to updates
+     * @param {boolean}     show            Boolean to show or hide the button
+     */
     var processingIndicator = function(button, show) {
         if(show) {
           $(button).hide();
@@ -302,6 +311,15 @@ require(['jquery','oae.core'], function($, oae) {
         } else {
           $(button).show();
           $(button).parent().children('.processing-indicator').hide();
+        }
+    }
+
+    var playbackLinks = function(id, published) {
+        links = $('#recording_' + id).find('.playback-links');
+        if (typeof published === 'string' && published === 'true' || typeof published === 'boolean' && published) {
+            links.show();
+        } else {
+            links.hide();
         }
     }
 
@@ -325,18 +343,14 @@ require(['jquery','oae.core'], function($, oae) {
         var publish = $(this).data('published');
         oae.api.meeting.updateRecording(meetingProfile.id, id, publish, function(err, info) {
           if(!err) {
-              links = $(".playback-links", recording_row);
               $(button).data('published', !publish);
-              if (publish) {
-                  $(button).html('publish');
-                  links.hide();
-              } else {
-                  $(button).html('unpublish');
-                  links.show();
-              }
+              playbackLinks(id, !publish);
+              $(button).html(publish ? 'publish' : 'unpublish');
           }
           processingIndicator(button, false);
         });
         processingIndicator(button, true);
     });
+
+
 });
