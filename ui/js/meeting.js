@@ -236,7 +236,8 @@ require(['jquery','oae.core'], function($, oae) {
     $(document).on('click', '.meeting-trigger-managemeeting-join', function() {
         console.info('Joining meeting');
         window.open('/api/meeting/' + meetingProfile.id + '/join');
-        if( meetingProfile.isManager ) {
+        // Show end button if user isManager or if allModerators
+        if ( meetingProfile.isManager || meetingProfile.allModerators == 'true' ) {
             var html_meeting_actionbar_end = '<button class="meeting-trigger-managemeeting-end"><i class="fa fa-minus-square pull-left oae-hide-when-anonymous"></i>' + oae.api.i18n.translate('__MSG__END_MEETING__', 'meeting') + '</button>';
             $('#meeting-actionbar-end').html(html_meeting_actionbar_end);
 
