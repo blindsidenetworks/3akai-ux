@@ -726,6 +726,8 @@ var _expose = function(exports) {
             return _generateMeetingUpdateMemberRoleSummary(me, activity, properties);
         } else if (activityType === 'meeting-update-visibility') {
             return _generateMeetingUpdateVisibilitySummary(me, activity, properties);
+        } else if (activityType === 'recording-update') {
+            return _generateRecordingUpdateSummary(me, activity, properties);
         } else if (activityType === 'folder-add-to-folder') {
             return _generateFolderAddToFolderSummary(me, activity, properties);
         } else if (activityType === 'folder-add-to-library') {
@@ -1575,6 +1577,27 @@ var _expose = function(exports) {
             i18nKey = '__MSG__ACTIVITY_MEETING_VISIBILITY_LOGGEDIN__';
         } else {
             i18nKey = '__MSG__ACTIVITY_MEETING_VISIBILITY_PRIVATE__';
+        }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of an update activity for a recording.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the recording update activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateRecordingUpdateSummary = function(me, activity, properties) {
+        var i18nKey = null;
+        if (properties.actorCount === 1) {
+            i18nKey = '__MSG__ACTIVITY_RECORDING_UPDATE_1__';
+        } else if (properties.actorCount === 2) {
+            i18nKey = '__MSG__ACTIVITY_RECORDING_UPDATE_2__';
+        } else {
+            i18nKey = '__MSG__ACTIVITY_RECORDING_UPDATE_2+__';
         }
         return new ActivityViewSummary(i18nKey, properties);
     };
