@@ -148,11 +148,11 @@ require(['jquery','oae.core'], function($, oae) {
             var activity = activities[0];
 
             var supportedActivities = ['meeting-update', 'meeting-update-visibility', 'meeting-start', 'meeting-end', 'recording-update'];
-            // Only respond to push notifications caused by other users
-            if (activity.actor.id !== oae.data.me.id && _.contains(supportedActivities, activity['oae:activityType'])) {
+
+            if (_.contains(supportedActivities, activity['oae:activityType'])) {
                 if (activity['oae:activityType'] === 'recording-update') {
                     playbackLinks(activity.object.recording.recordID, activity.object.recording.publish);
-                } else {
+                } else if (activity.actor.id !== oae.data.me.id) {
                     activity.object.canShare = meetingProfile.canShare;
                     activity.object.canPost = meetingProfile.canPost;
                     activity.object.isManager = meetingProfile.isManager;
@@ -344,7 +344,6 @@ require(['jquery','oae.core'], function($, oae) {
         oae.api.meeting.updateRecording(meetingProfile.id, id, publish, function(err, info) {
           if(!err) {
               $(button).data('published', !publish);
-              playbackLinks(id, !publish);
               $(button).html(publish ? 'publish' : 'unpublish');
           }
           processingIndicator(button, false);
