@@ -445,7 +445,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
      * @param  {Object}        [callback.err]        Error object containing error code and error message
      * @throws {Error}                               Error thrown when no valid meeting id has been provided
      */
-    var updateRecording = exports.updateRecording = function(recordingId, publish, callback) {
+    var updateRecording = exports.updateRecording = function(meetingId, recordingId, publish, callback) {
         if (!recordingId) {
             throw new Error('A valid recording id should be provided');
         }
@@ -454,7 +454,7 @@ define(['exports', 'jquery', 'underscore'], function(exports, $, _) {
         callback = callback || function() {};
 
         $.ajax({
-            'url': '/api/recording/' + recordingId,
+            'url': '/api/meeting/' + meetingId + '/recording/' + recordingId,
             'type': 'PATCH',
             'data':{'publish': !publish},
             'success': function(response) {
