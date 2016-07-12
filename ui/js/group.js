@@ -272,6 +272,27 @@ require(['jquery', 'oae.core'], function($, oae) {
                     ]
                 }
             ]
+          },
+          {
+              'id': 'meetup',
+              'title': oae.api.i18n.translate('__MSG__MEETUP__'),
+              'icon': 'fa-video-camera',
+              'closeNav': true,
+              'layout': [
+                  {
+                      'width': 'col-md-12',
+                      'widgets': [
+                          {
+                              'name': 'joinmeetup',
+                              'settings': {
+                                  'context': groupProfile,
+                                  'canUse': groupProfile.isMember,
+                                  'canManage': groupProfile.isManager
+                              }
+                          }
+                      ]
+                  }
+              ]
         });
 
         $(window).trigger('oae.trigger.lhnavigation', [lhNavPages, lhNavActions, baseUrl, groupProfile.displayName]);
