@@ -283,10 +283,10 @@ require(['jquery', 'oae.core'], function($, oae) {
                       'width': 'col-md-12',
                       'widgets': [
                           {
-                              'name': 'joinmeetup',
+                              'name': 'meetup',
                               'settings': {
                                   'context': groupProfile,
-                                  'canUse': groupProfile.isMember,
+                                  'canJoin': groupProfile.isMember,
                                   'canManage': groupProfile.isManager
                               }
                           }
