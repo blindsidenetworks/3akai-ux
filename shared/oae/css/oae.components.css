@@ -524,6 +524,10 @@ div.oae-thumbnail.fa-oae-email:before {
     content: "\f0e0";
 }
 
+div.oae-thumbnail.fa-oae-meetup:before {
+    content: "\f03d";
+}
+
 div.oae-thumbnail i.fa {
     position: absolute;
     bottom: -8px;
