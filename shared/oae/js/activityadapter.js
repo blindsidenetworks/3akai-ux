@@ -220,6 +220,13 @@ var _expose = function(exports) {
             activity.object['oae:collection'] = allComments;
             activity.object.latestComments = latestComments;
         }
+
+        if (activity['oae:activityType'] === 'meetup-join') {
+            activity.object.objectType = 'meetup';
+            if (activity.target) {
+                activity.target.objectType = 'meetup';
+            }
+        }
     };
 
     /**
