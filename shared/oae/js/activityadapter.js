@@ -735,6 +735,8 @@ var _expose = function(exports) {
             return _generateFollowingSummary(me, activity, properties);
         } else if (activityType === 'meetup-join') {
             return _generateMeetupJoinSummary(me, activity, properties);
+        } else if (activityType === 'meetup-end') {
+            return _generateMeetupEndSummary(me, activity, properties);
         } else if (activityType === 'group-add-member') {
             return _generateGroupAddMemberSummary(me, activity, properties);
         } else if (activityType === 'group-create') {
@@ -1622,7 +1624,7 @@ var _expose = function(exports) {
      * Render the end-user friendly, internationalized summary of a meetup join activity.
      *
      * @param  {User}                   me              The currently loggedin user
-     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the add group member activity, for which to generate the activity summary
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meetup join activity, for which to generate the activity summary
      * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
      * @return {ActivityViewSummary}                    A summary object
      * @api private
@@ -1636,6 +1638,20 @@ var _expose = function(exports) {
         } else {
             i18nKey = '__MSG__ACTIVITY_MEETUP_JOIN_2+__';
         }
+        return new ActivityViewSummary(i18nKey, properties);
+    };
+
+    /**
+     * Render the end-user friendly, internationalized summary of a meetup end activity.
+     *
+     * @param  {User}                   me              The currently loggedin user
+     * @param  {Activity}               activity        Standard activity object as specified by the activitystrea.ms specification, representing the meetup end activity, for which to generate the activity summary
+     * @param  {Object}                 properties      A set of properties that can be used to determine the correct summary
+     * @return {ActivityViewSummary}                    A summary object
+     * @api private
+     */
+    var _generateMeetupEndSummary = function(me, activity, properties) {
+        var i18nKey = '__MSG__ACTIVITY_MEETUP_END__';
         return new ActivityViewSummary(i18nKey, properties);
     };
 
