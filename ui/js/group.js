@@ -305,7 +305,7 @@ require(['jquery', 'oae.core'], function($, oae) {
             'icon': 'fa-video-camera',
             'closeNav': true,
             'type': 'link',
-            'link': '/api/meetup/' + groupProfile.id + '/join'
+            'link': '/api/meetups/' + groupProfile.id + '/join'
           });
         }
 
